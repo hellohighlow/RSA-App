@@ -18,57 +18,57 @@ public class Runner
         String choice = scan.nextLine();
         if(choice.toLowerCase().equals("encrypt"))
         {
-            out.println("Would you like to generate new keys?");
+            j.area.append("Would you like to generate new keys?\n");
             choice = scan.nextLine();
             if(choice.toLowerCase().equals("yes"))
             {
                 keyGen kg = new keyGen();
-                out.println("Pick 2 primes");
-                out.println("Prime number 1");
+                j.area.append("Pick 2 primes\n");
+                j.area.append("Prime number 1\n");
                 int a = Integer.parseInt(scan.nextLine());
-                out.println("Prime number 2");
+                j.area.append("Prime number 2\n");
                 int b = Integer.parseInt(scan.nextLine());
                 kg.setPrimes(a, b);
                 kg.keys();
-                out.println("What is your message?");
+                j.area.append("What is your message?\n");
                 String message = scan.nextLine();
                 String ascii = kg.ascii(message);
                 String encrypted = kg.encrypt(ascii);
-                out.println("Here is your encrypted message");
-                out.println(encrypted);
+                j.area.append("Here is your encrypted message\n");
+                j.area.append(encrypted);
             }
             else
             {
                 keyGen kg = new keyGen();
-                out.println("What is your message?");
+                j.area.append("What is your message?\n");
                 String message = scan.nextLine();
-                out.println("Enter e value");
+                j.area.append("Enter e value\n");
                 int e = Integer.parseInt(scan.nextLine());
-                out.println("Enter mod value");
+                j.area.append("Enter mod value\n");
                 int mod = Integer.parseInt(scan.nextLine());
                 String ascii = kg.ascii(message);
-                out.println(ascii);
+                j.area.append(ascii);
                 String encrypted = kg.encrypt(ascii, e, mod);
-                out.println("Here is your encrypted message");
-                out.println(encrypted);
+                j.area.append("Here is your encrypted message\n");
+                j.area.append(encrypted);
             }
 
         }
         if(choice.toLowerCase().equals("decrypt"))
         {
             keyGen kg = new keyGen();
-            out.println("Enter Message");
+            j.area.append("Enter Message\n");
             String message = scan.nextLine();
-            out.println("Enter d value");
+            j.area.append("Enter d value\n");
             int d = Integer.parseInt(scan.nextLine());
-            out.println("Enter mod value");
+            j.area.append("Enter mod value\n");
             int mod = Integer.parseInt(scan.nextLine());
             String output = kg.decrypt(message, d, mod);
-            System.out.println(output);
-            out.println(kg.asciiToEnglish(output));
+            j.area.append(output);
+            j.area.append(kg.asciiToEnglish(output));
 
         }
-        //out.println("");
+        //j.area.append("\n");
         //String decrypted = kg.decrypt(encrypted);
         //String result = kg.asciiToEnglish(decrypted);
 

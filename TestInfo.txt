@@ -1,8 +1,3 @@
-Message:
-This is encrypted!
-18463105
-Keys
-Private
-676270879, 450812507
-Public
-676270879, 3
+Your public key is (3261341,3527)
+Your private key is (3261341,1847)
+thx it did not work you are the best

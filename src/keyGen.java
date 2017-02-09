@@ -20,11 +20,13 @@ public class keyGen
             p = a;
             q = b;
         }
-        if(!isPrime(a)){
+        if(!isPrime(a))
+        {
             System.out.println(a + " isn't prime!");
             System.exit(0);
         }
-        if(!isPrime(b)) {
+        if(!isPrime(b))
+        {
             System.out.println(b + " isn't prime!");
             System.exit(0);
         }
@@ -68,6 +70,7 @@ public class keyGen
             //System.out.println(tmp);
             for(int y = 2; y < r/2; y++)
             {
+                //determines factors
                 if(!isPrime((int)tmp) && tmp % y == 0)
                 {
                     fact1 = (int)tmp/y;
@@ -83,10 +86,13 @@ public class keyGen
         d = fact2;
     }
     //ascii conversion
-    public String ascii(String m) {
-        try {
+    public String ascii(String m)
+    {
+        try
+        {
             String asciiChar = "";
-            for (int x = 0; x < m.length(); x++) {
+            for (int x = 0; x < m.length(); x++)
+            {
                 char cheese = m.charAt(x);
                 //converts to char to ascii
                 int b = (int) cheese;
@@ -94,9 +100,11 @@ public class keyGen
                 String d = "";
                 //System.out.println(c.length());
                 //if less than 3 pad with 0
-                if (c.length() < 3) {
+                if (c.length() < 3)
+                {
                     //System.out.println("<3");
-                    for (int i = c.length(); i < 3; i++) {
+                    for (int i = c.length(); i < 3; i++)
+                    {
                         d += "0" + c;
                         //System.out.println(d);
                     }
@@ -104,7 +112,7 @@ public class keyGen
                 //add the character(in ascii to the string
                 asciiChar = asciiChar + d;
             }
-
+            System.out.println(asciiChar);
             return asciiChar;
         }catch(NumberFormatException e)
         {
@@ -114,33 +122,63 @@ public class keyGen
     }
     public String encrypt(String m, int pubKey, int mod)
     {
-        BigInteger message = new BigInteger(m.getBytes());
-        BigInteger output = message.modPow(BigInteger.valueOf(pubKey),BigInteger.valueOf(mod));
-        String rt = ""+output;
-        return rt;
+        String output = "";
+        List message = new ArrayList<Integer>();
+        for (int x = 0; x < m.length(); x += 3)
+        {
+            //converts to manageable string
+            Long letter = Long.parseLong(m.substring(x, x + 3));
+            Long result = (long)1;
+            int y = pubKey;
+            while (y > 0)
+            {
+                //m = c^d % n
+                result = (result * letter) % mod;
+                y--;
+            }
+            message.add(result);
+        }
+        //pad it once more
+        for (Object x : message)
+        {
+            String d = "" + x;
+            if (d.length() < 3)
+            {
+                while (d.length() < 3)
+                    d = "0" + d;
+            }
+            d += "a";
+            output += d;
+        }
+        return output;
     }
     public String encrypt(String m)
     {
-        String output ="";
+        String output = "";
         List message = new ArrayList<Integer>();
-        for(int x = 0; x < m.length(); x += 3)
+        for (int x = 0; x < m.length(); x += 3)
         {
-            int letter = Integer.parseInt(m.substring(x,x+3));
-            int result = 1;
-            int y = d;
-            while (y > 0) {
+            //manageable ascii
+            Long letter = Long.parseLong(m.substring(x, x + 3));
+            Long result = (long)1;
+            int y = e;
+            while (y > 0)
+            {
+                //c = m^e % n
                 result = (result * letter) % n;
                 y--;
             }
             message.add(result);
         }
-        for(Object x: message) {
-            String d = ""+x;
-            if(d.length()<3)
-            {
-                while(d.length() < 3)
-                d = "0"+d;
+        for (Object x : message)
+        {
+            String d = "" + x;
+            if (d.length() < 3) {
+                while (d.length() < 3)
+                    //padding
+                    d = "0" + d;
             }
+            d += "a";
             output += d;
         }
         return output;
@@ -148,17 +186,37 @@ public class keyGen
     public String decrypt(String m, int pK, int mod)
     {
 
-        try {
-            BigInteger message = new BigInteger(m.getBytes());
-            BigInteger output = message.modPow(BigInteger.valueOf(pK), BigInteger.valueOf(mod));
-            String rt = "" + output;
-            return rt;
-        }
-        catch(NumberFormatException e)
+        String output ="";
+        List message = new ArrayList<Integer>();
+        String[] chars =m.split("a");
+        //separates each encrypted character
+        for(int x = 0; x < chars.length; x++)
         {
-            e.printStackTrace();
-            return "";
+            chars[x]+="\b";
+            //System.out.println(chars[x]);
+            Long letter = Long.parseLong(chars[x].trim());
+            Long result = (long) 1;
+            int y = pK;
+            while (y > 0)
+            {
+                //m = c^d % n
+                result = (result * letter) % mod;
+                y--;
+            }
+            message.add(result);
         }
+        for(Object x: message)
+        {
+            String d = ""+x;
+            //padding
+            if(d.length()<3)
+            {
+                while(d.length() < 3)
+                    d = "0"+d;
+            }
+            output += d;
+        }
+        return output;
     }
     public String asciiToEnglish(String m)
     {
@@ -166,12 +224,14 @@ public class keyGen
         for(int x = 0; x < m.length(); x += 3)
         {
             int letter = Integer.parseInt(m.substring(x,x+3));
+            //ascii to anglais
             message = message + Character.toString((char)letter);
         }
 
         return message;
     }
     //spaghetti code from https://stackoverflow.com/questions/4009198/java-get-greatest-common-divisor TY Tony Enis
+    //never actually used... whats the point?!?
     private static int gcdThing(int a, int b) {
         BigInteger b1 = BigInteger.valueOf(a);
         BigInteger b2 = BigInteger.valueOf(b);

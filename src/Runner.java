@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.math.BigInteger;
 import java.util.*;
 import static java.lang.System.*;
@@ -6,13 +7,21 @@ public class Runner
 {
     public static void main(String[] args)throws NumberFormatException
     {
+        gui j = new gui("fredrick");
+        j.setSize(800, 600);
+
+        //Do you want to be able to see the Frame?
+        j.setVisible(true);
+        j.setBackground(Color.black);
         Scanner scan = new Scanner(in);
-        out.println("Would you like to encrypt or decrypt");
+        j.area.append("Would you like to encrypt or decrypt\n");
         String choice = scan.nextLine();
-        if(choice.toLowerCase().equals("encrypt")) {
+        if(choice.toLowerCase().equals("encrypt"))
+        {
             out.println("Would you like to generate new keys?");
             choice = scan.nextLine();
-            if(choice.toLowerCase().equals("yes")) {
+            if(choice.toLowerCase().equals("yes"))
+            {
                 keyGen kg = new keyGen();
                 out.println("Pick 2 primes");
                 out.println("Prime number 1");
@@ -55,6 +64,7 @@ public class Runner
             out.println("Enter mod value");
             int mod = Integer.parseInt(scan.nextLine());
             String output = kg.decrypt(message, d, mod);
+            System.out.println(output);
             out.println(kg.asciiToEnglish(output));
 
         }

@@ -1,2 +1,2 @@
-# RSAForWeebs
-RSA app for the incompetent
+# RSA App
+RSA app written in Java
